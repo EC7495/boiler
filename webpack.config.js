@@ -3,7 +3,7 @@ module.exports = {
   mode: 'development',
   output: {
     path: __dirname, // assumes your bundle.js will also be in the root of your project folder
-    filename: 'bundle.js'
+    filename: './public/bundle.js'
   },
   devtool: 'source-maps',
   module: {
@@ -18,3 +18,32 @@ module.exports = {
     ]
   }
 };
+
+// const isDev = process.env.NODE_ENV === 'development';
+// module.exports = {
+//   mode: isDev ? 'development' : 'production',
+//   entry: [
+//     '@babel/polyfill', // enables async-await
+//     './index.js'
+//   ],
+//   output: {
+//     path: __dirname,
+//     filename: 'bundle.js'
+//   },
+//   resolve: {
+//     extensions: ['.js', '.jsx']
+//   },
+//   devtool: 'source-map',
+//   watchOptions: {
+//     ignored: /node_modules/
+//   },
+//   module: {
+//     rules: [
+//       {
+//         test: /\.jsx?$/,
+//         exclude: /node_modules/,
+//         loader: 'babel-loader'
+//       }
+//     ]
+//   }
+// };
