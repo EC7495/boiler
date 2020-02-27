@@ -9,5 +9,4 @@ export const App = () => {
   );
 };
 
-console.log(document);
 render(<App />, document.getElementById('app'));

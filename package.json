@@ -2,7 +2,7 @@
   "name": "boiler",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./client/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server",
@@ -17,8 +17,12 @@
     "morgan": "^1.9.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
