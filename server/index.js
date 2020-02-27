@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const path = require('path');
+const db = require('./db/database');
 const PORT = process.env.PORT || 3000;
 
 // logger
@@ -29,8 +30,19 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).send(err.message || 'Internal server error');
 });
 
-app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
-});
+// if you update your db schemas,
+// make sure you drop the tables first
+// and then recreate them
+(async () => {
+  try {
+    await db.sync();
+    console.log('Database sync done');
+    app.listen(PORT, () => {
+      console.log(`Listening on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error(error);
+  }
+})();
 
 module.exports = app;
