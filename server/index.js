@@ -3,10 +3,15 @@ const app = express();
 const morgan = require('morgan');
 const path = require('path');
 const session = require('express-session');
+const passport = require('passport');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const db = require('./db/database');
+const User = require('./db/models/user');
 const PORT = process.env.PORT || 3000;
 const SESSION_SECRET = process.env.SESSION_SECRET;
+
+const dbStore = new SequelizeStore({ db: db });
+dbStore.sync();
 
 // logger
 app.use(morgan('dev'));
@@ -23,11 +28,32 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use(
   session({
     secret: SESSION_SECRET || '@123~$easyMoneySniper!',
-    store: new SequelizeStore({ db: db }),
+    store: dbStore,
     resave: false,
     saveUninitialized: false
   })
 );
+
+// initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser((user, done) => {
+  try {
+    done(null, user.id);
+  } catch (error) {
+    done(error);
+  }
+});
+
+passport.deserializeUser(async (userId, done) => {
+  try {
+    const user = await User.findByPk(userId);
+    done(null, user);
+  } catch (error) {
+    done(error);
+  }
+});
 
 // api routes
 app.use('/api', require('./api'));
