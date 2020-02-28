@@ -58,6 +58,8 @@ passport.deserializeUser(async (userId, done) => {
 // api routes
 app.use('/api', require('./api'));
 
+app.use(require('./routes'));
+
 // send index.html for any other requests
 app.use('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
