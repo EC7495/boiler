@@ -36,18 +36,18 @@ const User = db.define('user', {
 /**
  * instanceMethods
  */
-User.prototype.correctPassword = password => {
+User.prototype.correctPassword = function(password) {
   return User.encryptPassword(password, this.salt()) === this.password();
 };
 
 /**
  * classMethods
  */
-User.generateSalt = () => {
+User.generateSalt = function() {
   return crypto.randomBytes(16).toString('base64');
 };
 
-User.encryptPassword = (text, salt) => {
+User.encryptPassword = function(text, salt) {
   return crypto
     .createHash('RSA-SHA256')
     .update(text)
@@ -58,7 +58,7 @@ User.encryptPassword = (text, salt) => {
 /**
  * hooks
  */
-const setSaltAndPassword = user => {
+const setSaltAndPassword = function(user) {
   if (user.changed('password')) {
     user.salt = User.generateSalt();
     user.password = User.encryptPassword(user.password(), user.salt());

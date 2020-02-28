@@ -15,7 +15,7 @@ router.put('/login', async (req, res, next) => {
   try {
     const user = await User.findOne({ where: { email: req.body.email } });
     if (!user) res.sendStatus(401);
-    else if (!user.hasMatchingPassword(req.body.password)) res.sendStatus(401);
+    else if (!user.correctPassword(req.body.password)) res.sendStatus(401);
     else {
       req.login(user, error => (error ? next(error) : res.json(user)));
     }
