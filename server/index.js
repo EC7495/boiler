@@ -33,16 +33,30 @@ app.use((err, req, res, next) => {
 // if you update your db schemas,
 // make sure you drop the tables first
 // and then recreate them
-(async () => {
+// (async () => {
+//   try {
+//     await db.sync();
+//     console.log('Database sync done');
+//     app.listen(PORT, () => {
+//       console.log(`Listening on port ${PORT}`);
+//     });
+//   } catch (error) {
+//     console.error(error);
+//   }
+// })();
+
+const syncAndListen = async () => {
   try {
     await db.sync();
-    console.log('Database sync done');
+    console.log('Database synced');
     app.listen(PORT, () => {
       console.log(`Listening on port ${PORT}`);
     });
   } catch (error) {
     console.error(error);
   }
-})();
+};
+
+syncAndListen();
 
 module.exports = app;
