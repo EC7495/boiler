@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('../.secrets');
+}
+
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
@@ -58,7 +62,8 @@ passport.deserializeUser(async (userId, done) => {
 // api routes
 app.use('/api', require('./api'));
 
-app.use(require('./routes'));
+// frontend
+app.use('/auth', require('./routes/auth'));
 
 // send index.html for any other requests
 app.use('*', (req, res) => {
